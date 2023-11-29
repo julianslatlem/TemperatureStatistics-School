@@ -1,45 +1,41 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 plt.style.use("dark_background")
 
-yr = pd.read_csv(r"./data/yr.csv")
-storm = pd.read_csv(r"./data/storm.csv")
+# Loads the temperature data from the .csv files.
+yrData = pd.read_csv(r"./data/yr.csv")["temp"].to_numpy()
+stormData = pd.read_csv(r"./data/storm.csv")["temp"].to_numpy()
 
-yrData = yr["Yr Temperatur (°C)"].to_numpy()
-stormData = storm["Storm Temperatur (°C)"].to_numpy()
-
-# Igjen, inspirasjon fra Ola
-average = []
-
+# Goes through the range of temperatures and evaluates an average of the two datasets, and then puts those values into an array.
+averageData = []
 for i in range(yrData.size):
-    average.append(np.average([yrData[i], stormData[i]]))
+    averageData.append(np.average([yrData[i], stormData[i]]))
+averageData = np.asarray(averageData)
 
-yrAverage = np.average(yrData)
-stormAverage = np.average(stormData)
+plt.plot(yrData, color="#ff0000", label="Yr")
+plt.plot(stormData, color="#0000ff", label="Storm")
 
-totalAverage = np.average([yrAverage, stormAverage])
+plt.plot(averageData, color="#3f2f3f", linestyle="--", label="Average")
 
-plot = yr.plot(x="Dato", y="Yr Temperatur (°C)", color="#0000ff")
-storm.plot(x="Dato", y="Storm Temperatur (°C)", ax=plot, color='#ff0000')
-# Credit til Ola for ideen
-try:
-    plt.get_current_fig_manager().full_screen_toggle()
-except:
-    print("Failed to get current fig manager.")
+plt.axhline(y=0, color='#0f0f0f', linestyle='--') # Draws a line at y0.
 
-plt.plot(average, color="#2f2f2f", linestyle='--')
+plt.axhline(y=np.average(yrData), color='#4f0f0f', linestyle='--', label="Yr Average")
+plt.axhline(y=np.average(stormData), color='#0f0f4f', linestyle='--', label="Storm Average")
 
-plot.set_xlim(left=0, right=8)
+# Evenly distributes the 9 dates on the x-axis.
+dates = np.array(["Wed 29. Nov", "Thu 30. Nov", "Fri 1. Dec", "Sat 2. Dec", "Sun 3. Dec", "Mon 4. Dec", "Tue 5. Dec", "Wed 6. Dec", "Thu 7. Dec"])
+plt.xticks(list(range(0, 9)), dates)
+plt.xlim(0, 8) # Stretches the data to fit the plot.
 
-plt.yticks([-8, -6, -4, -2, 0, 2, 4, 6, 8])
-plt.axhline(y=0, color='#2f2f2f', linestyle='--')
-plt.axhline(yrAverage, color='#000088', linestyle='--', label="Yr Gjennomsnitt")
-plt.axhline(stormAverage, color='#880000', linestyle='--', label="Storm Gjennomsnitt")
-# plt.axhline(totalAverage, color='purple', linestyle='--', label="Totalt Gjennomsnitt")
-plt.title("Temperatur i Kristiansund de neste 9 dagene.", fontdict={"size":"20"})
+plt.yticks(list(range(-8, 9)))
 
-plt.xlabel("")
-plt.legend()
+plt.title("Temperature forecast for Kristiansund the next 9 days", fontdict={"size":"20"})
+plt.xlabel("Date")
+plt.ylabel("Temperature (°C)")
+
+plt.legend() # Renders the UI elements (labels) to the plot.
+
+plt.get_current_fig_manager().full_screen_toggle() # Inspiration: Ola
 plt.show()
