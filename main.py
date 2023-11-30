@@ -18,7 +18,7 @@ averageData = np.asarray(averageData)
 plt.plot(yrData, color="#ff0000", label="Yr")
 plt.plot(stormData, color="#0000ff", label="Storm")
 
-plt.plot(averageData, color="#3f2f3f", linestyle="--", label="Average")
+plt.plot(averageData, color="#4f4f4f", linestyle="--", label="Average")
 
 plt.axhline(y=0, color='#0f0f0f', linestyle='--') # Draws a line at y0.
 
@@ -43,5 +43,5 @@ plt.text(0.11, -0.5, "_")
 
 plt.legend() # Renders the UI elements (labels) to the plot.
 
-plt.get_current_fig_manager().full_screen_toggle() # Inspiration: Ola
+plt.get_current_fig_manager().full_screen_toggle() # Inspiration: Ola | Remove if problems accur
 plt.show()
