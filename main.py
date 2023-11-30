@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import statistics as stats
 import numpy as np
 import pandas as pd
 
@@ -23,6 +24,8 @@ plt.axhline(y=0, color='#0f0f0f', linestyle='--') # Draws a line at y0.
 
 plt.axhline(y=np.average(yrData), color='#4f0f0f', linestyle='--', label="Yr Average")
 plt.axhline(y=np.average(stormData), color='#0f0f4f', linestyle='--', label="Storm Average")
+plt.axhline(y=stats.mode(yrData), color='#0f4f0f', linestyle='--', label="Yr Mode")
+plt.axhline(y=stats.mode(stormData), color='#4f4f0f', linestyle='--', label="Storm Mode")
 
 # Evenly distributes the 9 dates on the x-axis.
 dates = np.array(["Wed 29. Nov", "Thu 30. Nov", "Fri 1. Dec", "Sat 2. Dec", "Sun 3. Dec", "Mon 4. Dec", "Tue 5. Dec", "Wed 6. Dec", "Thu 7. Dec"])
@@ -34,6 +37,9 @@ plt.yticks(list(range(-8, 9)))
 plt.title("Temperature forecast for Kristiansund the next 9 days", fontdict={"size":"20"})
 plt.xlabel("Date")
 plt.ylabel("Temperature (°C)")
+
+plt.text(0.1, 0.5, "+")
+plt.text(0.11, -0.5, "_")
 
 plt.legend() # Renders the UI elements (labels) to the plot.
 
