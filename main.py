@@ -15,9 +15,6 @@ for i in range(yrData.size):
     averageData.append(np.average([yrData[i], stormData[i]]))
 averageData = np.asarray(averageData)
 
-plt.plot(yrData, color="#ff0000", label="Yr")
-plt.plot(stormData, color="#0000ff", label="Storm")
-
 plt.plot(averageData, color="#4f4f4f", linestyle="--", label="Average")
 
 plt.axhline(y=0, color='#0f0f0f', linestyle='--') # Draws a line at y0.
@@ -26,6 +23,9 @@ plt.axhline(y=np.average(yrData), color='#4f0f0f', linestyle='--', label="Yr Ave
 plt.axhline(y=np.average(stormData), color='#0f0f4f', linestyle='--', label="Storm Average")
 plt.axhline(y=stats.mode(yrData), color='#0f4f0f', linestyle='--', label="Yr Mode")
 plt.axhline(y=stats.mode(stormData), color='#4f4f0f', linestyle='--', label="Storm Mode")
+
+plt.plot(yrData, marker="o", color="#ff0000", label="Yr")
+plt.plot(stormData, marker="o", color="#0000ff", label="Storm")
 
 # Evenly distributes the 9 dates on the x-axis.
 dates = np.array(["Wed 29. Nov", "Thu 30. Nov", "Fri 1. Dec", "Sat 2. Dec", "Sun 3. Dec", "Mon 4. Dec", "Tue 5. Dec", "Wed 6. Dec", "Thu 7. Dec"])
